@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Quality — CORRUGATE IQ{% endblock %}
+{% block page_title %}Quality Assurance & Defect Analysis{% endblock %}
+{% block content %}
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-label">Total Inspected</div><div class="kpi-value" id="kpi-q-produced">—</div></div>
+  <div class="kpi-card success"><div class="kpi-label">Good Units</div><div class="kpi-value" id="kpi-q-good">—</div></div>
+  <div class="kpi-card danger"><div class="kpi-label">Rejected Units</div><div class="kpi-value" id="kpi-q-rejected">—</div></div>
+  <div class="kpi-card warning"><div class="kpi-label">Rejection Rate</div><div class="kpi-value" id="kpi-q-rate">—</div></div>
+</div>
+
+<div class="chart-grid">
+  <div class="chart-card">
+    <h3>Defect Type Breakdown</h3>
+    <canvas id="defectChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Rejection Rate by Machine</h3>
+    <canvas id="machineRejectionChart"></canvas>
+  </div>
+</div>
+
+<div class="chart-card wide">
+  <h3>Machine Quality Performance</h3>
+  <div id="quality-container">
+    <div style="color:var(--text-muted);padding:1rem;">Loading quality metrics...</div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/quality.js') }}"></script>
+{% endblock %}

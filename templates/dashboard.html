@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block title %}Dashboard — CORRUGATE IQ{% endblock %}
+{% block page_title %}Plant Overview Dashboard{% endblock %}
+{% block content %}
+<div class="kpi-row" id="kpiRow">
+  <!-- Populated by dashboard.js -->
+  <div class="kpi-card" id="kpi-oee">
+    <div class="kpi-label">Plant OEE</div>
+    <div class="kpi-value">—</div>
+    <div style="font-size:0.72rem;color:var(--text-subtle)">Target Benchmark: &ge; 75.0%</div>
+  </div>
+  <div class="kpi-card" id="kpi-achievement">
+    <div class="kpi-label">Production Achievement</div>
+    <div class="kpi-value">—</div>
+    <div style="font-size:0.72rem;color:var(--text-subtle)">Actual vs Planned Output</div>
+  </div>
+  <div class="kpi-card" id="kpi-waste">
+    <div class="kpi-label">Paper Waste %</div>
+    <div class="kpi-value">—</div>
+    <div style="font-size:0.72rem;color:var(--text-subtle)">Ceiling Threshold: &le; 5.0%</div>
+  </div>
+  <div class="kpi-card" id="kpi-rejection">
+    <div class="kpi-label">Rejection Rate</div>
+    <div class="kpi-value">—</div>
+    <div style="font-size:0.72rem;color:var(--text-subtle)">Tolerance Ceiling: &le; 2.0%</div>
+  </div>
+  <div class="kpi-card" id="kpi-downtime">
+    <div class="kpi-label">Unplanned Downtime</div>
+    <div class="kpi-value">—</div>
+    <div style="font-size:0.72rem;color:var(--text-subtle)">Cumulative Stoppage Time</div>
+  </div>
+</div>
+
+<div class="chart-grid">
+  <div class="chart-card wide">
+    <h3>
+      <span>Daily Production Trend</span>
+      <span class="badge badge-medium">30-Day Velocity</span>
+    </h3>
+    <canvas id="productionChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>
+      <span>OEE by Machine</span>
+      <span class="badge badge-low">Fleet Performance</span>
+    </h3>
+    <canvas id="oeeChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>
+      <span>Downtime Pareto</span>
+      <span class="badge badge-high">80/20 Loss Analysis</span>
+    </h3>
+    <canvas id="downtimePareto"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>
+      <span>Paper Waste Breakdown</span>
+      <span class="badge badge-critical">Material Losses</span>
+    </h3>
+    <canvas id="wasteChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>
+      <span>Shift Performance Comparison</span>
+      <span class="badge badge-medium">Shifts A, B & C</span>
+    </h3>
+    <canvas id="shiftChart"></canvas>
+  </div>
+</div>
+
+<div class="insights-panel">
+  <h3>
+    <span>🔍 Automated Plant Diagnostics & Insights</span>
+    <span style="font-size:0.75rem;font-weight:500;color:var(--text-subtle)">Ranked by financial & operational severity</span>
+  </h3>
+  <div id="insightsList"></div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
+{% endblock %}

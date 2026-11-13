@@ -1,0 +1,108 @@
+{% extends "base.html" %}
+{% block title %}Settings & Simulator — CORRUGATE IQ{% endblock %}
+{% block page_title %}Plant Settings & Scenario Simulator{% endblock %}
+{% block content %}
+<div class="chart-grid">
+  <!-- What-If Simulator -->
+  <div class="chart-card wide">
+    <h3>🔮 What-If Improvement Simulator</h3>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.25rem">
+      Simulate operational improvements across downtime, waste, and speed to forecast box output, financial savings, and OEE gains.
+    </p>
+
+    <div class="sim-panel">
+      <div class="sim-controls">
+        <label>
+          Downtime Reduction: <strong id="dtLabel">20%</strong>
+          <input type="range" id="dtReduction" min="0" max="100" value="20" oninput="document.getElementById('dtLabel').textContent=this.value+'%'">
+        </label>
+
+        <label>
+          Waste Reduction: <strong id="wstLabel">15%</strong>
+          <input type="range" id="wstReduction" min="0" max="100" value="15" oninput="document.getElementById('wstLabel').textContent=this.value+'%'">
+        </label>
+
+        <label>
+          Rejection Reduction: <strong id="rejLabel">25%</strong>
+          <input type="range" id="rejReduction" min="0" max="100" value="25" oninput="document.getElementById('rejLabel').textContent=this.value+'%'">
+        </label>
+
+        <label>
+          Ideal Speed Improvement: <strong id="spdLabel">10%</strong>
+          <input type="range" id="spdImprovement" min="0" max="100" value="10" oninput="document.getElementById('spdLabel').textContent=this.value+'%'">
+        </label>
+
+        <button id="runSim" class="btn-primary" style="margin-top:0.75rem;width:100%;padding:0.6rem">
+          ⚡ Run Simulation
+        </button>
+      </div>
+
+      <div>
+        <div style="font-size:0.85rem;color:var(--text-muted);margin-bottom:0.6rem">Simulated Projection vs Baseline</div>
+        <div id="simResults">
+          <div style="color:var(--text-muted);font-size:0.85rem;padding:1rem;background:rgba(255,255,255,0.02);border-radius:8px">
+            Adjust the sliders on the left and click <strong>Run Simulation</strong> to compute the projected yield and financial savings.
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Plant Configuration Targets -->
+  <div class="chart-card wide">
+    <h3>⚙️ Plant Baseline Configuration & Standards</h3>
+    <table>
+      <thead>
+        <tr>
+          <th>Configuration Parameter</th>
+          <th>Standard Baseline</th>
+          <th>Unit / Description</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>Plant Target OEE</strong></td>
+          <td><span class="badge badge-medium">75.0%</span></td>
+          <td>World-class manufacturing industry benchmark</td>
+        </tr>
+        <tr>
+          <td><strong>Paper Waste Target</strong></td>
+          <td><span class="badge badge-low">&le; 5.0%</span></td>
+          <td>Maximum allowable corrugation trim and process waste</td>
+        </tr>
+        <tr>
+          <td><strong>Rejection Rate Target</strong></td>
+          <td><span class="badge badge-low">&le; 2.0%</span></td>
+          <td>Quality ceiling for box structural and printing defects</td>
+        </tr>
+        <tr>
+          <td><strong>Shift Duration</strong></td>
+          <td>8 Hours</td>
+          <td>3 shifts per day (Shift A, Shift B, Shift C)</td>
+        </tr>
+        <tr>
+          <td><strong>Operating Schedule</strong></td>
+          <td>26 Days / Month</td>
+          <td>Standard 6-day work week operations</td>
+        </tr>
+        <tr>
+          <td><strong>Raw Paper Pricing</strong></td>
+          <td>Kraft: ₹42/kg | Fluting: ₹35/kg | Test: ₹38/kg</td>
+          <td>Average weighted rate: ₹38.33 / kg</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/simulator.js') }}"></script>
+<script>
+  // Automatically run simulation once on load to show initial numbers
+  document.addEventListener("DOMContentLoaded", () => {
+    if (typeof runSimulation === "function") {
+      runSimulation();
+    }
+  });
+</script>
+{% endblock %}

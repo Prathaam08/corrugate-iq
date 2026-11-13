@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Materials — CORRUGATE IQ{% endblock %}
+{% block page_title %}Material & Paper Waste Management{% endblock %}
+{% block content %}
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-label">Total Paper Input</div><div class="kpi-value" id="kpi-mat-input">—</div></div>
+  <div class="kpi-card warning"><div class="kpi-label">Total Waste</div><div class="kpi-value" id="kpi-mat-waste">—</div></div>
+  <div class="kpi-card success"><div class="kpi-label">Overall Yield</div><div class="kpi-value" id="kpi-mat-yield">—</div></div>
+  <div class="kpi-card danger"><div class="kpi-label">Waste Percentage</div><div class="kpi-value" id="kpi-mat-waste-pct">—</div></div>
+</div>
+
+<div class="chart-grid">
+  <div class="chart-card">
+    <h3>Paper Input by Grade</h3>
+    <canvas id="matTypeChart"></canvas>
+  </div>
+  <div class="chart-card">
+    <h3>Waste Breakdown Categories</h3>
+    <canvas id="matWasteChart"></canvas>
+  </div>
+</div>
+
+<div class="chart-card wide">
+  <h3>Recent Material Consumption Logs</h3>
+  <div id="materials-container">
+    <div style="color:var(--text-muted);padding:1rem;">Loading material consumption data...</div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/materials.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block title %}Production — CORRUGATE IQ{% endblock %}
+{% block page_title %}Production Overview & Logs{% endblock %}
+{% block content %}
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-label">Total Planned</div><div class="kpi-value" id="kpi-prod-planned">—</div></div>
+  <div class="kpi-card"><div class="kpi-label">Total Actual</div><div class="kpi-value" id="kpi-prod-actual">—</div></div>
+  <div class="kpi-card success"><div class="kpi-label">Good Units</div><div class="kpi-value" id="kpi-prod-good">—</div></div>
+  <div class="kpi-card"><div class="kpi-label">Achievement</div><div class="kpi-value" id="kpi-prod-achieve">—</div></div>
+  <div class="kpi-card warning"><div class="kpi-label">Rejection Rate</div><div class="kpi-value" id="kpi-prod-rej">—</div></div>
+</div>
+
+<div class="chart-grid">
+  <div class="chart-card wide">
+    <h3>Production Volume Trends</h3>
+    <canvas id="prodDailyChart"></canvas>
+  </div>
+  <div class="chart-card wide">
+    <h3>Production Time Loss by Machine (Minutes)</h3>
+    <canvas id="prodLossChart"></canvas>
+  </div>
+</div>
+
+<div class="chart-card wide">
+  <h3>Recent Production Records (Filtered)</h3>
+  <div id="production-container">
+    <div style="color:var(--text-muted);padding:1rem;">Loading production records...</div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/production.js') }}"></script>
+{% endblock %}

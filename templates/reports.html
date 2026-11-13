@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}Reports — CORRUGATE IQ{% endblock %}
+{% block page_title %}Data Export & Operational Reports{% endblock %}
+{% block content %}
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-label">Available Datasets</div><div class="kpi-value">4</div></div>
+  <div class="kpi-card success"><div class="kpi-label">Formats</div><div class="kpi-value" style="font-size:1.4rem">Excel & CSV</div></div>
+  <div class="kpi-card"><div class="kpi-label">Filter Sync</div><div class="kpi-value" style="font-size:1.4rem">Active</div></div>
+  <div class="kpi-card"><div class="kpi-label">Time Window</div><div class="kpi-value" style="font-size:1.4rem">30 Days</div></div>
+</div>
+
+<!-- Helpful note about Excel CSV behavior -->
+<div style="background:rgba(79,142,247,0.1);border-left:4px solid var(--accent);padding:0.9rem 1.2rem;border-radius:0 8px 8px 0;margin-bottom:1.5rem;font-size:0.88rem;line-height:1.4">
+  <strong>💡 Tip for Excel users:</strong> When opening raw CSV files in Excel, dates might show as <code>#####</code> because Excel's default column width is too narrow for full dates (<code>YYYY-MM-DD</code>).
+  Double-click the column boundary line between Column B and C in Excel to expand it, or download the <strong>Excel (.xlsx)</strong> format below which auto-fits all columns automatically.
+</div>
+
+<div class="chart-grid">
+  <!-- Production Report -->
+  <div class="chart-card">
+    <div style="font-size:2rem;margin-bottom:0.5rem">🏭</div>
+    <h3>Production Log Report</h3>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.2rem">
+      Detailed records of daily production shifts, planned vs. actual outputs, good units, and operating costs.
+    </p>
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+      <a href="/api/export/production/excel" class="btn-primary" style="display:inline-block;text-decoration:none" download id="btnExpProdXlsx">
+        📊 Download Excel (.xlsx)
+      </a>
+      <a href="/api/export/production" class="btn-primary" style="display:inline-block;text-decoration:none;background:var(--border);color:var(--text)" download id="btnExpProd">
+        📄 Download CSV
+      </a>
+    </div>
+  </div>
+
+  <!-- Downtime Report -->
+  <div class="chart-card">
+    <div style="font-size:2rem;margin-bottom:0.5rem">⏱️</div>
+    <h3>Downtime Events Report</h3>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.2rem">
+      Full audit trail of planned and unplanned machine downtime events, root causes, and duration minutes.
+    </p>
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+      <a href="/api/export/downtime/excel" class="btn-primary" style="display:inline-block;text-decoration:none" download id="btnExpDtXlsx">
+        📊 Download Excel (.xlsx)
+      </a>
+      <a href="/api/export/downtime" class="btn-primary" style="display:inline-block;text-decoration:none;background:var(--border);color:var(--text)" download id="btnExpDt">
+        📄 Download CSV
+      </a>
+    </div>
+  </div>
+
+  <!-- Material Report -->
+  <div class="chart-card">
+    <div style="font-size:2rem;margin-bottom:0.5rem">📄</div>
+    <h3>Material & Waste Report</h3>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.2rem">
+      Raw paper roll consumption logs, paper types, good yield percentages, and 6 waste sub-categories.
+    </p>
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+      <a href="/api/export/material/excel" class="btn-primary" style="display:inline-block;text-decoration:none" download id="btnExpMatXlsx">
+        📊 Download Excel (.xlsx)
+      </a>
+      <a href="/api/export/material" class="btn-primary" style="display:inline-block;text-decoration:none;background:var(--border);color:var(--text)" download id="btnExpMat">
+        📄 Download CSV
+      </a>
+    </div>
+  </div>
+
+  <!-- Quality Report -->
+  <div class="chart-card">
+    <div style="font-size:2rem;margin-bottom:0.5rem">✅</div>
+    <h3>Quality Inspection Report</h3>
+    <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:1.2rem">
+      Quality control inspections, box defect categorizations (printing, adhesive, flute), and rejection rates.
+    </p>
+    <div style="display:flex;gap:0.6rem;flex-wrap:wrap">
+      <a href="/api/export/quality/excel" class="btn-primary" style="display:inline-block;text-decoration:none" download id="btnExpQualityXlsx">
+        📊 Download Excel (.xlsx)
+      </a>
+      <a href="/api/export/quality" class="btn-primary" style="display:inline-block;text-decoration:none;background:var(--border);color:var(--text)" download id="btnExpQuality">
+        📄 Download CSV
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script>
+  function syncExportLinks() {
+    const q = buildQuery();
+    document.getElementById("btnExpProd").href = "/api/export/production" + q;
+    document.getElementById("btnExpProdXlsx").href = "/api/export/production/excel" + q;
+    document.getElementById("btnExpDt").href = "/api/export/downtime" + q;
+    document.getElementById("btnExpDtXlsx").href = "/api/export/downtime/excel" + q;
+    document.getElementById("btnExpMat").href = "/api/export/material" + q;
+    document.getElementById("btnExpMatXlsx").href = "/api/export/material/excel" + q;
+    document.getElementById("btnExpQuality").href = "/api/export/quality" + q;
+    document.getElementById("btnExpQualityXlsx").href = "/api/export/quality/excel" + q;
+  }
+  window.addEventListener("filtersChanged", syncExportLinks);
+  document.addEventListener("DOMContentLoaded", syncExportLinks);
+</script>
+{% endblock %}

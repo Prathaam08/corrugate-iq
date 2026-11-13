@@ -1,0 +1,100 @@
+[
+  {
+    "id": "COR-001",
+    "name": "Corrugation Machine Alpha",
+    "type": "Corrugation Machine",
+    "ply_options": [
+      "3-ply",
+      "5-ply"
+    ],
+    "ideal_speed_boxes_per_hour": 120,
+    "planned_hours_per_day": 24,
+    "shifts": 3,
+    "paper_rate_inr_per_kg": 42,
+    "status": "operational",
+    "location": "Line 1",
+    "year_installed": 2019
+  },
+  {
+    "id": "COR-002",
+    "name": "Corrugation Machine Beta",
+    "type": "Corrugation Machine",
+    "ply_options": [
+      "5-ply",
+      "7-ply"
+    ],
+    "ideal_speed_boxes_per_hour": 100,
+    "planned_hours_per_day": 24,
+    "shifts": 3,
+    "paper_rate_inr_per_kg": 42,
+    "status": "maintenance",
+    "location": "Line 2",
+    "year_installed": 2015
+  },
+  {
+    "id": "FLX-001",
+    "name": "Flexo Printer Unit 1",
+    "type": "Flexo Printer",
+    "ply_options": [
+      "3-ply",
+      "5-ply",
+      "7-ply"
+    ],
+    "ideal_speed_boxes_per_hour": 90,
+    "planned_hours_per_day": 24,
+    "shifts": 3,
+    "paper_rate_inr_per_kg": 38,
+    "status": "operational",
+    "location": "Print Bay",
+    "year_installed": 2018
+  },
+  {
+    "id": "SLT-001",
+    "name": "Slotter Die Cutter 1",
+    "type": "Slotter/Die Cutter",
+    "ply_options": [
+      "3-ply",
+      "5-ply"
+    ],
+    "ideal_speed_boxes_per_hour": 110,
+    "planned_hours_per_day": 24,
+    "shifts": 3,
+    "paper_rate_inr_per_kg": 38,
+    "status": "operational",
+    "location": "Cutting Bay",
+    "year_installed": 2020
+  },
+  {
+    "id": "FLD-001",
+    "name": "Folder Gluer 1",
+    "type": "Folder Gluer",
+    "ply_options": [
+      "3-ply",
+      "5-ply"
+    ],
+    "ideal_speed_boxes_per_hour": 95,
+    "planned_hours_per_day": 24,
+    "shifts": 3,
+    "paper_rate_inr_per_kg": 35,
+    "status": "operational",
+    "location": "Finishing Bay",
+    "year_installed": 2021
+  },
+  {
+    "id": "SHT-001",
+    "name": "Sheet Cutter Slitter 1",
+    "type": "Sheet Cutter/Slitter",
+    "ply_options": [
+      "3-ply",
+      "5-ply",
+      "7-ply"
+    ],
+    "ideal_speed_boxes_per_hour": 130,
+    "planned_hours_per_day": 24,
+    "shifts": 3,
+    "paper_rate_inr_per_kg": 35,
+    "status": "operational",
+    "location": "Slitting Bay",
+    "year_installed": 2022
+  }
+]

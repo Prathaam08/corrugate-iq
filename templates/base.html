@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}CORRUGATE IQ — Industrial Analytics{% endblock %}</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <nav class="sidebar">
+    <div class="brand">
+      <span class="brand-icon">📦</span>
+      <div>
+        <div class="brand-name">CORRUGATE IQ</div>
+        <div style="font-size:0.65rem;color:var(--text-subtle);font-weight:700;letter-spacing:0.08em;margin-top:-2px">ENTERPRISE SCADA</div>
+      </div>
+    </div>
+
+    <div class="sidebar-section-label">Operations</div>
+    <ul class="nav-links">
+      <li><a href="/"           class="{% if request.path == '/' %}active{% endif %}">📊 <span>Dashboard</span></a></li>
+      <li><a href="/production" class="{% if request.path == '/production' %}active{% endif %}">🏭 <span>Production</span></a></li>
+      <li><a href="/machines"   class="{% if request.path == '/machines' %}active{% endif %}">⚙️ <span>Machines</span></a></li>
+      <li><a href="/materials"  class="{% if request.path == '/materials' %}active{% endif %}">📄 <span>Materials</span></a></li>
+      <li><a href="/quality"    class="{% if request.path == '/quality' %}active{% endif %}">✅ <span>Quality</span></a></li>
+      <li><a href="/orders"     class="{% if request.path == '/orders' %}active{% endif %}">📋 <span>Orders</span></a></li>
+    </ul>
+
+    <div class="sidebar-section-label" style="margin-top:0.5rem">Intelligence</div>
+    <ul class="nav-links">
+      <li><a href="/reports"    class="{% if request.path == '/reports' %}active{% endif %}">📁 <span>Reports & Exports</span></a></li>
+      <li><a href="/settings"   class="{% if request.path == '/settings' %}active{% endif %}">🔮 <span>What-If Simulator</span></a></li>
+    </ul>
+
+    <div class="sidebar-footer">
+      <div class="sidebar-status-pill">
+        <span class="live-dot" style="background:#10b981;box-shadow:0 0 6px #10b981"></span>
+        <span>PLANT 01 ONLINE</span>
+      </div>
+      <div style="color:var(--text-subtle);font-size:0.7rem">SCADA Telemetry: 99.8% Uptime</div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <header class="topbar">
+      <div class="topbar-title">
+        <span style="color:var(--text-subtle);font-weight:400;font-size:0.95rem">Plant 01 /</span>
+        <span>{% block page_title %}Dashboard{% endblock %}</span>
+      </div>
+      <div class="topbar-controls" id="filterBar">
+        <button id="liveTelemetryToggle" class="btn-live-stream" onclick="toggleTelemetry()" title="Toggle live factory telemetry simulation">
+          <span class="live-dot"></span> LIVE Stream <span id="liveStateLabel">OFF</span>
+        </button>
+        <label style="cursor:pointer" title="Dataset available: Oct 1 - Oct 30, 2026">
+          <span style="color:var(--text-subtle)">From:</span>
+          <input type="date" id="startDate" value="2026-10-01" min="2026-10-01" max="2026-10-30">
+        </label>
+        <label style="cursor:pointer" title="Dataset available: Oct 1 - Oct 30, 2026">
+          <span style="color:var(--text-subtle)">To:</span>
+          <input type="date" id="endDate" value="2026-10-30" min="2026-10-01" max="2026-10-30">
+        </label>
+        <label>
+          <span style="color:var(--text-subtle)">Shift:</span>
+          <select id="shiftFilter">
+            <option value="">All Shifts</option>
+            <option value="A">Shift A</option>
+            <option value="B">Shift B</option>
+            <option value="C">Shift C</option>
+          </select>
+        </label>
+        <button onclick="applyFilters()" class="btn-primary">Apply</button>
+      </div>
+    </header>
+
+    <div id="telemetryTicker" class="telemetry-ticker">
+      <div style="display:flex;align-items:center;gap:1.5rem">
+        <span>⚡ <strong>Factory Floor Telemetry:</strong> Connected (SCADA Node 01)</span>
+        <span>Line Speed: <strong id="telCurrentSpeed">108 boxes/min</strong></span>
+        <span>Shift Pace: <strong style="color:#22c55e">98.6% of target</strong></span>
+      </div>
+      <div>
+        <span>Real-time Stream Output: <strong id="telLiveBoxes" style="color:#f59e0b">+0 boxes</strong></span>
+      </div>
+    </div>
+
+    <div class="page-body">
+      {% block content %}{% endblock %}
+    </div>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/filters.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+  <script src="{{ url_for('static', filename='js/telemetry.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

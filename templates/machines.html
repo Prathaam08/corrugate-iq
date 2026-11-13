@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Machines — CORRUGATE IQ{% endblock %}
+{% block page_title %}Machine Fleet Performance{% endblock %}
+{% block content %}
+<div class="kpi-row" id="machinesKpiRow">
+  <div class="kpi-card"><div class="kpi-label">Total Fleet</div><div class="kpi-value" id="kpiFleetCount">6</div></div>
+  <div class="kpi-card success"><div class="kpi-label">Running Fleet</div><div class="kpi-value" id="kpiRunningCount">5</div></div>
+  <div class="kpi-card"><div class="kpi-label">Average OEE</div><div class="kpi-value" id="kpiAvgOee">—</div></div>
+  <div class="kpi-card warning"><div class="kpi-label">Underperforming</div><div class="kpi-value" id="kpiUnderperforming">—</div></div>
+</div>
+
+<div class="chart-card wide">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1rem">
+    <h3>Operational Status & Fleet Metrics</h3>
+    <span style="font-size:0.8rem;color:var(--text-muted)">💡 Click any machine or Diagnostics button for root-cause audit</span>
+  </div>
+  <div id="machines-container">
+    <div style="color:var(--text-muted);padding:1rem;">Loading machine metrics...</div>
+  </div>
+</div>
+
+<!-- Machine Diagnostic Drilldown Modal (Feature 1) -->
+<div id="machineModal" class="modal-overlay" onclick="if(event.target===this) closeMachineModal()">
+  <div class="modal-box">
+    <div class="modal-header">
+      <div>
+        <h3 id="modalMachineTitle" style="display:inline-block">Machine Diagnostics</h3>
+        <span id="modalMachineStatusBadge" style="margin-left:0.5rem"></span>
+      </div>
+      <button class="modal-close" onclick="closeMachineModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modalMachineBody">
+      <div style="color:var(--text-muted);padding:1.5rem;text-align:center">Loading diagnostic data...</div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/machines.js') }}"></script>
+{% endblock %}

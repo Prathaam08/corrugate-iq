@@ -1,0 +1,18 @@
+[
+  {
+    "oee_target": 0.75,
+    "waste_target_pct": 5.0,
+    "rejection_target_pct": 2.0,
+    "paper_rate_inr_per_kg": {
+      "Kraft Liner": 42,
+      "Fluting Medium": 35,
+      "Test Liner": 38
+    },
+    "shift_hours": 8,
+    "demo_mode": true,
+    "plant_name": "CORRUGATE IQ Plant 1",
+    "currency": "INR",
+    "timezone": "Asia/Kolkata",
+    "working_days_per_month": 26
+  }
+]

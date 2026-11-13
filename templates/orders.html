@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% block title %}Orders — CORRUGATE IQ{% endblock %}
+{% block page_title %}Customer Order Schedule & Tracking{% endblock %}
+{% block content %}
+<div class="kpi-row">
+  <div class="kpi-card"><div class="kpi-label">Total Active Orders</div><div class="kpi-value" id="kpi-ord-total">—</div></div>
+  <div class="kpi-card"><div class="kpi-label">In Production</div><div class="kpi-value" id="kpi-ord-progress">—</div></div>
+  <div class="kpi-card success"><div class="kpi-label">Completed</div><div class="kpi-value" id="kpi-ord-completed">—</div></div>
+  <div class="kpi-card danger"><div class="kpi-label">Delayed / At Risk</div><div class="kpi-value" id="kpi-ord-risk">—</div></div>
+</div>
+
+<div class="chart-card wide">
+  <h3>Order Fulfillment Schedule</h3>
+  <div id="orders-container">
+    <div style="color:var(--text-muted);padding:1rem;">Loading orders data...</div>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/orders.js') }}"></script>
+{% endblock %}
