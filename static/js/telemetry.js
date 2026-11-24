@@ -62,7 +62,8 @@ function startTelemetryStream() {
     const boxEl = document.getElementById("telLiveBoxes");
     if (boxEl) boxEl.textContent = "+" + _simulatedLiveBoxes.toLocaleString("en-IN") + " boxes";
 
-    // Optional: update dashboard achievement if present
+    // Note: This is a UI simulation, not live data.
+    // The achievement KPI value is not modified — only a subtle visual pulse.
     const achieveEl = document.getElementById("kpi-achievement");
     if (achieveEl) {
       const valElem = achieveEl.querySelector(".kpi-value");

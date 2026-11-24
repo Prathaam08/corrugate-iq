@@ -16,7 +16,10 @@ async function loadMachines() {
     const underEl = document.getElementById("kpiUnderperforming");
 
     if (fleetEl) fleetEl.textContent = machines.length;
-    if (runningEl) runningEl.textContent = machines.filter(m => m.status === "Running" || m.status === "operational").length;
+    if (runningEl) runningEl.textContent = machines.filter(m => {
+      const st = (m.status || "").toLowerCase();
+      return st === "running" || st === "operational";
+    }).length;
 
     if (machines.length > 0) {
       const avgOee = (machines.reduce((sum, m) => sum + (m.oee || 0), 0) / machines.length).toFixed(1);
@@ -35,7 +38,7 @@ async function loadMachines() {
           ${machines.map(m => {
             const oeeVal = m.oee ?? 0;
             const oeeClass = oeeVal >= 75 ? "badge-low" : (oeeVal >= 60 ? "badge-high" : "badge-critical");
-            const isRun = m.status === "Running" || m.status === "operational";
+            const isRun = (m.status || "").toLowerCase() === "running" || (m.status || "").toLowerCase() === "operational";
             const statusClass = isRun ? "badge-low" : (m.status === "Maintenance" ? "badge-critical" : "badge-medium");
             return `
             <tr style="cursor:pointer" onclick="openMachineModal('${m.id}')">

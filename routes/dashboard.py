@@ -288,7 +288,16 @@ def api_materials():
 
 @dashboard_bp.route("/api/orders")
 def api_orders():
+    filters = _parse_filters()
     orders = ds.get_orders()
+    # Apply date/status filtering to orders
+    if filters.get("start_date"):
+        orders = [o for o in orders if o.get("due_date", "") >= filters["start_date"]]
+    if filters.get("end_date"):
+        orders = [o for o in orders if o.get("due_date", "") <= filters["end_date"]]
+    if filters.get("machine_ids"):
+        machine_set = set(filters["machine_ids"])
+        orders = [o for o in orders if o.get("assigned_machine") in machine_set]
     total = len(orders)
     in_progress = sum(1 for o in orders if o.get("status") == "In Progress")
     completed = sum(1 for o in orders if o.get("status") == "Completed")

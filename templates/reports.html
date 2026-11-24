@@ -88,15 +88,18 @@
 {% block scripts %}
 <script>
   function syncExportLinks() {
-    const q = buildQuery();
-    document.getElementById("btnExpProd").href = "/api/export/production" + q;
-    document.getElementById("btnExpProdXlsx").href = "/api/export/production/excel" + q;
-    document.getElementById("btnExpDt").href = "/api/export/downtime" + q;
-    document.getElementById("btnExpDtXlsx").href = "/api/export/downtime/excel" + q;
-    document.getElementById("btnExpMat").href = "/api/export/material" + q;
-    document.getElementById("btnExpMatXlsx").href = "/api/export/material/excel" + q;
-    document.getElementById("btnExpQuality").href = "/api/export/quality" + q;
-    document.getElementById("btnExpQualityXlsx").href = "/api/export/quality/excel" + q;
+    // Small delay to ensure filter inputs are initialized
+    requestAnimationFrame(() => {
+      const q = buildQuery();
+      document.getElementById("btnExpProd").href = "/api/export/production" + q;
+      document.getElementById("btnExpProdXlsx").href = "/api/export/production/excel" + q;
+      document.getElementById("btnExpDt").href = "/api/export/downtime" + q;
+      document.getElementById("btnExpDtXlsx").href = "/api/export/downtime/excel" + q;
+      document.getElementById("btnExpMat").href = "/api/export/material" + q;
+      document.getElementById("btnExpMatXlsx").href = "/api/export/material/excel" + q;
+      document.getElementById("btnExpQuality").href = "/api/export/quality" + q;
+      document.getElementById("btnExpQualityXlsx").href = "/api/export/quality/excel" + q;
+    });
   }
   window.addEventListener("filtersChanged", syncExportLinks);
   document.addEventListener("DOMContentLoaded", syncExportLinks);

@@ -32,7 +32,7 @@ async function loadOrders() {
           <tbody>
             ${orders.map(o => {
               const pct = o.ordered_qty ? Math.min(100, Math.round((o.completed_qty / o.ordered_qty) * 100)) : 0;
-              const prioClass = o.priority === "High" ? "badge-critical" : (o.priority === "Medium" ? "badge-high" : "badge-medium");
+              const prioClass = o.priority === "Critical" ? "badge-critical" : (o.priority === "High" ? "badge-high" : (o.priority === "Medium" ? "badge-medium" : "badge-low"));
               const riskBadge = o.is_at_risk ? `<span class="badge badge-critical" style="margin-left:4px">⚠️ At Risk</span>` : "";
               return `
               <tr>

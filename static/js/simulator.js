@@ -30,8 +30,13 @@ function renderSimResults(data) {
   const fmt = (v, unit = "") => (v != null ? Number(v).toLocaleString("en-IN") + unit : "—");
   const fmtDelta = (d) => {
     const abs = d?.abs ?? 0;
-    const pct = d?.pct != null ? ` (${abs >= 0 ? "+" : ""}${d.pct}%)` : "";
-    return `<span style="color:${abs >= 0 ? "#22c55e" : "#ef4444"}">${abs >= 0 ? "+" : ""}${fmt(abs)}${pct}</span>`;
+    const pctStr = d?.pct != null ? ` (${abs >= 0 ? "+" : ""}${d.pct}%)` : "";
+    const sign = abs >= 0 ? "+" : "";
+    const color = abs >= 0 ? "#22c55e" : "#ef4444";
+    const span = document.createElement("span");
+    span.style.color = color;
+    span.textContent = `${sign}${fmt(abs)}${pctStr}`;
+    return span.outerHTML;
   };
 
   container.innerHTML = `

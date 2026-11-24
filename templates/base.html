@@ -3,16 +3,22 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="CORRUGATE IQ — Enterprise corrugated packaging plant SCADA analytics dashboard. OEE, production, quality, and waste management.">
+  <meta name="theme-color" content="#090c15">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><text x='0' y='28' font-size='28'>📦</text></svg>" type="image/svg+xml">
   <title>{% block title %}CORRUGATE IQ — Industrial Analytics{% endblock %}</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   {% block head %}{% endblock %}
 </head>
 <body>
-  <nav class="sidebar">
+  <!-- Mobile hamburger toggle -->
+  <button class="mobile-menu-toggle" id="mobileMenuToggle" onclick="document.querySelector('.sidebar').classList.toggle('open'); this.classList.toggle('open')" aria-label="Toggle navigation menu">
+    <span></span><span></span><span></span>
+  </button>
+
+  <nav class="sidebar" id="sidebarNav">
     <div class="brand">
       <span class="brand-icon">📦</span>
       <div>
@@ -79,7 +85,7 @@
 
     <div id="telemetryTicker" class="telemetry-ticker">
       <div style="display:flex;align-items:center;gap:1.5rem">
-        <span>⚡ <strong>Factory Floor Telemetry:</strong> Connected (SCADA Node 01)</span>
+        <span>⚡ <strong>Factory Floor Telemetry:</strong> Connected (SCADA Node 01) — <em style="font-size:0.75rem;color:#94a3b8">simulated demo data</em></span>
         <span>Line Speed: <strong id="telCurrentSpeed">108 boxes/min</strong></span>
         <span>Shift Pace: <strong style="color:#22c55e">98.6% of target</strong></span>
       </div>

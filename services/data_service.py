@@ -12,14 +12,24 @@ from typing import Any
 _HERE = os.path.dirname(os.path.abspath(__file__))
 _DATA_DIR = os.path.join(_HERE, "..", "data")
 
+# ── In-memory cache (avoids re-reading JSON on every API call) ────────────
+_CACHE: dict[str, Any] = {}
+
 
 # ── I/O ──────────────────────────────────────────────────────────────────────
 
 def load_json(filename: str) -> Any:
-    """Load and return parsed JSON from data/<filename>."""
-    path = os.path.join(_DATA_DIR, filename)
-    with open(path, "r", encoding="utf-8") as fh:
-        return json.load(fh)
+    """Load and return parsed JSON from data/<filename>, cached in memory."""
+    if filename not in _CACHE:
+        path = os.path.join(_DATA_DIR, filename)
+        with open(path, "r", encoding="utf-8") as fh:
+            _CACHE[filename] = json.load(fh)
+    return _CACHE[filename]
+
+
+def clear_cache() -> None:
+    """Clear all cached data (useful for testing or data refresh)."""
+    _CACHE.clear()
 
 
 # ── Raw getters (with optional filtering) ────────────────────────────────────
@@ -126,7 +136,14 @@ def summarize_production(records: list[dict]) -> dict:
     Returns a dict with totals and derived KPIs.
     """
     if not records:
-        return {}
+        return {
+            "total_planned": 0, "total_actual": 0, "total_good": 0,
+            "total_rejected": 0, "achievement_pct": 0, "rejection_rate_pct": 0,
+            "total_paper_input_kg": 0, "total_waste_kg": 0, "waste_pct": 0,
+            "total_labour_cost": 0, "total_electricity_cost": 0,
+            "total_maintenance_cost": 0, "total_cost_inr": 0,
+            "cost_per_1000_boxes": 0, "record_count": 0,
+        }
     planned   = sum(r.get("planned_output", 0) for r in records)
     actual    = sum(r.get("actual_output", 0) for r in records)
     good      = sum(r.get("good_output", 0) for r in records)
@@ -165,7 +182,11 @@ def summarize_downtime(events: list[dict]) -> dict:
     per-category and per-machine breakdowns.
     """
     if not events:
-        return {}
+        return {
+            "total_events": 0, "total_minutes": 0,
+            "planned_minutes": 0, "unplanned_minutes": 0,
+            "by_category": {}, "by_machine": {},
+        }
     from collections import defaultdict
     total_min = sum(e.get("duration_minutes", 0) for e in events)
     planned_min = sum(e.get("duration_minutes", 0) for e in events if e.get("is_planned"))
@@ -194,7 +215,11 @@ def summarize_material(records: list[dict]) -> dict:
     Returns totals of paper input, waste sub-categories, and overall yield.
     """
     if not records:
-        return {}
+        return {
+            "total_paper_input_kg": 0, "total_waste_kg": 0,
+            "total_good_output_kg": 0, "waste_pct": 0, "yield_pct": 0,
+            "by_paper_type_kg": {}, "record_count": 0,
+        }
     paper_in = sum(r.get("paper_input_kg", 0) for r in records)
     waste    = sum(r.get("total_waste_kg", 0) for r in records)
     good_kg  = sum(r.get("good_output_kg", 0) for r in records)
@@ -221,7 +246,16 @@ def summarize_quality(records: list[dict]) -> dict:
     Returns total produced, good, rejected, rejection rate, and defect breakdown.
     """
     if not records:
-        return {}
+        return {
+            "total_produced": 0, "total_good": 0, "total_rejected": 0,
+            "rejection_rate_pct": 0,
+            "defect_breakdown": {
+                "incorrect_dimensions": 0, "poor_printing": 0,
+                "weak_adhesive": 0, "damaged_flute": 0,
+                "cutting": 0, "folding": 0,
+            },
+            "record_count": 0,
+        }
     produced  = sum(r.get("total_produced", 0) for r in records)
     good      = sum(r.get("good_units", 0) for r in records)
     rejected  = sum(r.get("rejected_units", 0) for r in records)

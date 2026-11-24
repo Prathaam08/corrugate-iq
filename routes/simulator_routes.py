@@ -26,8 +26,9 @@ def api_simulate():
     dt_sum   = ds.summarize_downtime(downtime)
     plant    = kpi.aggregate_oee_for_plant(prod)
 
-    # Determine average paper rate
-    avg_paper_rate = sum(config.get("paper_rate_inr_per_kg", {}).values()) / 3
+    # Determine average paper rate (dynamic — works with any number of paper types)
+    paper_rates = config.get("paper_rate_inr_per_kg", {})
+    avg_paper_rate = sum(paper_rates.values()) / len(paper_rates) if paper_rates else 38.0
 
     baseline_data = {
         "total_planned":              prod_sum.get("total_planned", 0),
